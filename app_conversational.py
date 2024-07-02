@@ -5,7 +5,7 @@ import os
 import hashlib
 import uuid
 # from dotenv import load_dotenv
-from PyPDF2 import PdfReader
+# from PyPDF2 import PdfReader
 from langchain.chat_models import AzureChatOpenAI
 from langchain.document_loaders import PyPDFLoader, Docx2txtLoader, UnstructuredExcelLoader, CSVLoader
 from langchain.text_splitter import CharacterTextSplitter
