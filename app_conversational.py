@@ -17,7 +17,7 @@ from htmlTemplates import css, bot_template, user_template
 from langchain.schema import HumanMessage, SystemMessage, AIMessage
 from langchain.prompts import PromptTemplate
 
-load_dotenv()
+# load_dotenv()
 
 os.environ["OPENAI_API_TYPE"] = "azure"
 os.environ["OPENAI_API_BASE"] = "https://ea-openai.openai.azure.com/"
