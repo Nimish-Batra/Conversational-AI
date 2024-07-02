@@ -65,13 +65,27 @@ def generate_response(question, conversation_chain):
     response = conversation_chain({'question': question})
 
     # Generate follow-up question
+    # follow_up_prompt = PromptTemplate(
+    #     input_variables=['answer'],
+    #     template="Based on the answer: {answer}, suggest a follow-up question that could be asked to further the conversation.follow up question should be of the form Do you also want to know this? The follow up question should be from document only take context from conversational_chain available ."
+    # )
     follow_up_prompt = PromptTemplate(
-        input_variables=['answer'],
-        template="Based on the answer: {answer}, suggest a follow-up question that could be asked to further the conversation.follow up question should be of the form Do you also want to know this?"
+        input_variables=['answer', 'chat_history','context'],
+        template=("Given the answer: {answer} and the previous conversation context: {chat_history}, "
+                  "Your primary and only goal is to generate a follow-up question based on the topics from the files that have not been discussed yet using the{context}. "
+                  "The follow-up question should be in the form 'Do you also want to know this?'. "
+                  "Make sure the follow-up question is derived strictly from the content of the files and is related to a topic not yet covered in the conversation. "
+                  "If no new topics can be found in the files, respond with: 'Sorry, I couldn't see anything relevant'. "
+                  "Do not create any questions that are not directly based on the content of the  files."
+                  )
     )
-    follow_up_chain = LLMChain(llm=llm, prompt=follow_up_prompt)
-    follow_up_response = follow_up_chain.run(answer=response['answer'])
 
+    chat_history = conversation_chain.memory.chat_memory.messages
+    context= "Use the following pieces of context from the provided files only. Do not use any information from the internet to answer the question at the end."
+
+    follow_up_chain = LLMChain(llm=llm, prompt=follow_up_prompt)
+    # follow_up_response = follow_up_chain.run(answer=response['answer'])
+    follow_up_response = follow_up_chain.run(answer=response['answer'], chat_history=chat_history,context=context)
     return response, follow_up_response
 
 
@@ -107,10 +121,11 @@ def handle_userinput():
                                                                                                       str(ele[3])),
             unsafe_allow_html=True
         )
-
     st.session_state.follow_up_question = follow_up
     st.session_state.follow_up_needed = True
     st.write(follow_up, unsafe_allow_html=True)
+
+
 
 
 #
