@@ -1,4 +1,0 @@
-streamlit
-langchain==0.2.2
-langchain-community==0.0.1
-python-dotenv==1.0.0
