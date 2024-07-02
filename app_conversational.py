@@ -24,7 +24,7 @@ os.environ["OPENAI_API_BASE"] = "https://ea-openai.openai.azure.com/"
 os.environ["OPENAI_API_KEY"] = "2355a247f79f4b8ea2adaa0929cd32c2"
 os.environ["OPENAI_API_VERSION"] = "2023-05-15"
 os.environ["LANGCHAIN_TRACING_V2"]="true"
-os.environ["LANGCHAIN_API_KEY"]=os.getenv("LANGCHAIN_API_KEY")
+os.environ["LANGCHAIN_API_KEY"]="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"
 
 llm = AzureChatOpenAI(azure_deployment="gpt-35-turbo", model_name="gpt-4", temperature=0.50)
 # model = SentenceTransformer('all-MiniLM-L6-v2')
